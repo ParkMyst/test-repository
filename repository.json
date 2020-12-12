@@ -2,7 +2,7 @@
   "name": "Test Repository",
   "maintainer": {
     "name": "Test",
-    "address": "test@parkmyst.hu"
+    "address": "invalid-address@parkmyst.hu"
   },
   "plugins": []
 }
