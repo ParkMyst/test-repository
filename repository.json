@@ -1,0 +1,8 @@
+{
+  "name": "Test Repository",
+  "maintainer": {
+    "name": "Test",
+    "address": "test@parkmyst.hu"
+  },
+  "plugins": []
+}
