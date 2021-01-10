@@ -1,8 +1,31 @@
 {
+  "$schema": "http://parkmyst.github.io/plugins/schemas/repository.schema.json",
   "name": "Test Repository",
   "maintainer": {
     "name": "Test",
-    "address": "invalid-address@parkmyst.hu"
+    "address": "non-existant-address@parkmyst.hu"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "QuestionPlugin",
+      "description": "This is a test plugin with a simple question interface",
+      "library": "parkmyst-1.ts",
+      "path": "./QuestionPlugin.ts",
+      "version": "0.0.1"
+    },
+    {
+      "name": "ManagerPlugin",
+      "description": "This is a copy of the manager copy found in the main repository",
+      "library": "parkmyst-1.ts",
+      "path": "./ManagerPlugin.ts",
+      "version": "0.0.1"
+    },
+    {
+      "name": "MessagePlugin",
+      "description": "This is a stripped copy of the message plugin in the main repository",
+      "library": "parkmyst-1.ts",
+      "path": "./MessagePlugin.ts",
+      "version": "0.0.1"
+    }
+  ]
 }
