@@ -15,7 +15,6 @@ import {
 
 interface HtmlMessageData extends ComponentData {
     message: string
-    nextComponent: number
 }
 
 interface FeedContext {
@@ -28,19 +27,8 @@ export class HtmlMessage extends Component<HtmlMessageData> {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
-        "definitions": {
-            "component": {
-                "$id": "#/definitions/component",
-                "type": "number",
-                "title": "Next component",
-                "default": -1,
-                "minimum": -1,
-                "format": "parkmyst-id"
-            }
-        },
         "required": [
-            "message",
-            "nextComponent"
+            "message"
         ],
         "properties": {
             "message": {
@@ -48,9 +36,6 @@ export class HtmlMessage extends Component<HtmlMessageData> {
                 "type": "string",
                 "title": "Html message",
                 "default": "<h1>Default message</h1>"
-            },
-            "nextComponent": {
-                "$ref": "#/definitions/component"
             }
         }
     };
@@ -79,7 +64,7 @@ export class HtmlMessage extends Component<HtmlMessageData> {
         });
         setCtx({ messageId: feedId });
 
-        dispatchNextComponentEvent(component.data.nextComponent);
+        dispatchNextComponentEvent(component.nextComponents);
     }
 
     componentCleanUp() {
