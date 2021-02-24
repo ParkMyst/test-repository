@@ -7,9 +7,11 @@ import {
     getComponentInformation,
     JSONSchema7,
     OutputTemplates,
-    PlayerPermission,
     registerComponent,
-    removeFeed, subscribeToEvent, unsubscribeFromEvent, updateStatus,
+    removeFeed,
+    subscribeToEvent,
+    unsubscribeFromEvent,
+    updateStatus,
     useState
 } from "./library/parkmyst-1";
 
@@ -23,7 +25,7 @@ interface FeedContext {
 
 export class HtmlMessage extends Component<HtmlMessageData> {
 
-    schemaComponentData: JSONSchema7 = {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
@@ -43,15 +45,14 @@ export class HtmlMessage extends Component<HtmlMessageData> {
     doCleanUpOnCompletion = false;
     defaultCleanUpEnabled = false;
 
-    componentOutputTemplate: OutputTemplates = {
+    outputTemplates: OutputTemplates = {
         message: {
             example: {
                 message: "Example message!"
             },
-            display: `<div>
+            template: `<div>
     <p>{{message}}</p>
-</div>`,
-            permission: PlayerPermission.User
+</div>`
         }
     };
 

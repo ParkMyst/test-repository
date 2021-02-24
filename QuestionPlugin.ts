@@ -7,12 +7,10 @@ import {
     dispatchNextComponentEvent,
     JSONSchema7,
     OutputTemplates,
-    PlayerPermission,
     registerComponent,
     removeFeed,
     subscribeToEvent,
-    unsubscribeFromEvent,
-    useState
+    unsubscribeFromEvent
 } from "./library/parkmyst-1";
 
 interface QuestionData extends ComponentData {
@@ -33,12 +31,12 @@ function isAnswerEvent(event: ComponentEvent): event is AnswerEvent {
         && typeof event.data.answer === "string";
 }
 
-interface SimpleQuestionContext {
+interface SimpleQuestionState {
     feedId: string
 }
 
-export class SimpleQuestion extends Component<QuestionData> {
-    schemaComponentData: JSONSchema7 = {
+export class SimpleQuestion extends Component<QuestionData, SimpleQuestionState> {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
@@ -78,20 +76,19 @@ export class SimpleQuestion extends Component<QuestionData> {
         }
     };
 
-    componentOutputTemplate: OutputTemplates = {
+    outputTemplates: OutputTemplates = {
         simpleQuestion: {
             example: {
                 question: "This is a question?"
             },
-            display:
+            template:
                 `<form>
     <p>
         {{question}}
     </p>
     <input type="text" name="answer">
     <input type="submit" inputtype="simpleAnswer"/>
-</form>`,
-            permission: PlayerPermission.User
+</form>`
         }
     };
 
@@ -102,10 +99,10 @@ export class SimpleQuestion extends Component<QuestionData> {
 
     componentStartEvent() {
         subscribeToEvent("simpleAnswer")
-        const component = this.getComponentInformation();
-        const [, setContext] = useState<SimpleQuestionContext>();
+        const component = this.getInformation();
+        const [, setContext] = this.useState();
 
-        const ctx: SimpleQuestionContext = {
+        const ctx: SimpleQuestionState = {
             feedId: createFeed("simpleQuestion", {
                 question: component.data.question
             })
@@ -115,19 +112,19 @@ export class SimpleQuestion extends Component<QuestionData> {
     }
 
     componentCleanUp() {
-        const [ctx,] = useState<SimpleQuestionContext>();
+        const [ctx,] = this.useState();
         unsubscribeFromEvent("simpleAnswer")
         removeFeed(ctx.feedId);
     }
 
     componentCompleted() {
-        const data = this.getComponentInformation();
+        const data = this.getInformation();
         dispatchNextComponentEvent(data.nextComponents);
     }
 
     handleSimpleAnswer = (event: AnswerEvent) => {
         const answer = event.data.answer;
-        const component = this.getComponentInformation();
+        const component = this.getInformation();
         if (answer === component.data.answer) {
             dispatchCompleted();
         } else {

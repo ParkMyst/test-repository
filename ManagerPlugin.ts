@@ -7,10 +7,9 @@ import {
     dispatchCompleted,
     dispatchComponentEvent,
     dispatchNextComponentEvent,
-    getComponentInformation,
+    GameEndEvent,
     JSONSchema7,
-    registerComponent,
-    GameEndEvent
+    registerComponent
 } from "./library/parkmyst-1";
 
 interface FinisherData extends ComponentData {
@@ -19,7 +18,7 @@ interface FinisherData extends ComponentData {
 
 export class Finisher extends Component<FinisherData> {
 
-    schemaComponentData: JSONSchema7 = {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
@@ -45,13 +44,13 @@ export class Finisher extends Component<FinisherData> {
     };
 
 
-    componentOutputTemplate = {};
+    outputTemplates = {};
 
     componentStartEvent() {
         dispatchComponentEvent<ComponentEndEvent>({
             type: BuiltInEvents.ComponentEnd,
             data: {
-                target: getComponentInformation<FinisherData>().data.toFinish
+                target: this.getInformation().data.toFinish
             }
         });
         dispatchCompleted();
@@ -62,7 +61,7 @@ export class Finisher extends Component<FinisherData> {
     }
 
     componentCompleted() {
-        const component = getComponentInformation<FinisherData>();
+        const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
 }
@@ -75,7 +74,7 @@ interface ReseterData extends ComponentData {
 
 export class Reseter extends Component<ReseterData> {
 
-    schemaComponentData: JSONSchema7 = {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
@@ -101,13 +100,13 @@ export class Reseter extends Component<ReseterData> {
     };
 
 
-    componentOutputTemplate = {};
+    outputTemplates = {};
 
     componentStartEvent() {
         dispatchComponentEvent<ComponentResetEvent>({
             type: BuiltInEvents.ComponentReset,
             data: {
-                target: getComponentInformation<ReseterData>().data.toReset
+                target: this.getInformation().data.toReset
             }
         });
         dispatchCompleted();
@@ -118,7 +117,7 @@ export class Reseter extends Component<ReseterData> {
     }
 
     componentCompleted() {
-        const component = getComponentInformation<ReseterData>();
+        const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
 }
@@ -126,7 +125,7 @@ export class Reseter extends Component<ReseterData> {
 registerComponent(new Reseter());
 
 export class StartNode extends Component {
-    schemaComponentData: JSONSchema7 = {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false,
@@ -135,10 +134,10 @@ export class StartNode extends Component {
     };
     autoStart = true;
 
-    componentOutputTemplate = {};
+    outputTemplates = {};
 
     componentCompleted() {
-        const component = getComponentInformation();
+        const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
 
@@ -154,13 +153,13 @@ export class StartNode extends Component {
 registerComponent(new StartNode());
 
 export class EndNode extends Component {
-    schemaComponentData: JSONSchema7 = {
+    schema: JSONSchema7 = {
         "$schema": "http://json-schema.org/draft-07/schema",
         "type": "object",
         "additionalProperties": false
     };
 
-    componentOutputTemplate = {};
+    outputTemplates = {};
 
     protected componentCleanUp(): void {
 
