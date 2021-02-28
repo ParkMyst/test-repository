@@ -46,7 +46,7 @@ export class Finisher extends Component<FinisherData> {
 
     outputTemplates = {};
 
-    componentStartEvent() {
+    componentStartEvent = () => {
         dispatchComponentEvent<ComponentEndEvent>({
             type: BuiltInEvents.ComponentEnd,
             data: {
@@ -56,11 +56,11 @@ export class Finisher extends Component<FinisherData> {
         dispatchCompleted();
     }
 
-    componentCleanUp() {
+    componentCleanUp = () => {
 
     }
 
-    componentCompleted() {
+    componentCompleted = () => {
         const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
@@ -102,7 +102,7 @@ export class Reseter extends Component<ReseterData> {
 
     outputTemplates = {};
 
-    componentStartEvent() {
+    componentStartEvent = () => {
         dispatchComponentEvent<ComponentResetEvent>({
             type: BuiltInEvents.ComponentReset,
             data: {
@@ -112,11 +112,11 @@ export class Reseter extends Component<ReseterData> {
         dispatchCompleted();
     }
 
-    componentCleanUp() {
+    componentCleanUp = () => {
 
     }
 
-    componentCompleted() {
+    componentCompleted = () => {
         const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
@@ -136,16 +136,16 @@ export class StartNode extends Component {
 
     outputTemplates = {};
 
-    componentCompleted() {
+    componentCompleted = () => {
         const component = this.getInformation();
         dispatchNextComponentEvent(component.nextComponents)
     }
 
-    componentCleanUp() {
+    componentCleanUp = () => {
 
     }
 
-    componentStartEvent() {
+    componentStartEvent = () => {
         dispatchCompleted();
     }
 }
@@ -161,11 +161,11 @@ export class EndNode extends Component {
 
     outputTemplates = {};
 
-    protected componentCleanUp(): void {
+    protected componentCleanUp = (): void => {
 
     }
 
-    protected componentCompleted(): void {
+    protected componentCompleted = (): void => {
         dispatchComponentEvent<GameEndEvent>({
             type: BuiltInEvents.GameEnd,
             data: {}
@@ -173,7 +173,7 @@ export class EndNode extends Component {
     }
 
 
-    protected componentStartEvent(): void {
+    protected componentStartEvent = (): void => {
         dispatchCompleted();
     }
 }

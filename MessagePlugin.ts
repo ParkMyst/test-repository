@@ -56,7 +56,7 @@ export class HtmlMessage extends Component<HtmlMessageData> {
         }
     };
 
-    componentStartEvent() {
+    componentStartEvent = () => {
         const component = getComponentInformation<HtmlMessageData>();
         const [, setCtx] = useState<FeedContext>();
 
@@ -68,7 +68,7 @@ export class HtmlMessage extends Component<HtmlMessageData> {
         dispatchNextComponentEvent(component.nextComponents);
     }
 
-    componentCleanUp() {
+    componentCleanUp = () => {
         const [ctx,] = useState<FeedContext>();
         removeFeed(ctx.messageId);
         updateStatus("idle");
@@ -77,7 +77,7 @@ export class HtmlMessage extends Component<HtmlMessageData> {
         unsubscribeFromEvent(BuiltInEvents.ComponentEnd);
     }
 
-    componentCompleted() {
+    componentCompleted = () => {
 
     }
 }
